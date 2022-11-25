@@ -1,0 +1,2199 @@
+create database set1;
+
+use set1;
+
+
+create table if not exists city
+(
+	id int,
+    `name` varchar(50),
+    CountryCode varchar(50),
+    district varchar(50),
+    population BIGINT
+);
+    
+    select * from city;
+    
+    insert into city values (6,'Rotterdam','NLD','Zuid-Holland',593321),
+							(3878, 'Scottsdale', 'USA', 'Arizona', 202705),
+							(3965, 'Corona', 'USA', 'California', 124966),
+							(3973 ,'Concord', 'USA', 'California', 121780),
+							(3977, 'Cedar Rapids', 'USA', 'Iowa', 120758),
+							(3982, 'Coral Springs', 'USA', 'Florida', 117549),
+							(4054, 'Fairfield', 'USA', 'California', 92256),
+							(4058, 'Boulder', 'USA', 'Colorado', 91238),
+							(4061, 'Fall River', 'USA', 'Massachusetts', 90555);
+                            
+
+#Q1. Query all columns for all American cities in the CITY table with populations larger than 100000.The CountryCode for America is USA.
+#The CITY table is described as follows:
+
+select * from city where countrycode = 'USA' and population >100000;
+
+#Q2. Query the NAME field for all American cities in the CITY table with populations larger than 120000.The CountryCode for America is USA.
+#The CITY table is described as follows:
+
+select * from city where countrycode = 'USA' and population >120000;
+
+
+
+#Q3. Query all columns (attributes) for every row in the CITY table.The CITY table is described as follows:
+
+	select * from city;
+
+#Q4. Query all columns for a city in CITY with the ID 1661.The CITY table is described as follows:
+
+select * from city where id = 1661;
+
+#Q5. Query all attributes of every Japanese city in the CITY table. The COUNTRYCODE for Japan is JPN.
+
+select * from city where countrycode = 'JPN';
+
+#Q6. Query the names of all the Japanese cities in the CITY table. The COUNTRYCODE for Japan is JPN.
+select name, countrycode from city where countrycode ='JPN';
+
+create table if not exists station
+(
+	ID INT,
+    CITY varchar(21),
+    STATE varchar(2),
+    LAT_N  int ,
+    LONG_W int
+);
+
+insert into station values (794, 'Kissee Mills', 'MO', 139, 73),
+(824, 'Loma Mar', 'CA', 48, 130),
+(603, 'Sandy Hook', 'CT', 72, 148),
+(478, 'Tipton', 'IN', 33, 97),
+(619, 'Arlington', 'CO', 75, 92),
+(711, 'Turnerx', 'AR', 50, 101),
+(839, 'Slidell', 'LA', 85, 151),
+(411, 'Negreet', 'LA', 98, 105),
+(588, 'Glencoe', 'KY', 46, 136),
+(665, 'Chelsea', 'IA', 98, 59),
+(342, 'Chignik Lagoon', 'AK', 103, 153),
+(733, 'Pelahatchie', 'MS', 38, 28),
+(441, 'Hanna City', 'IL', 50, 136),
+(811, 'Dorrance', 'KS', 102, 121),
+(698, 'Albany', 'CA', 49, 80),
+(325, 'Monument', 'KS', 70, 141),
+(414, 'Manchester', 'MD', 73, 37),
+(113, 'Prescott', 'IA', 39, 65),
+(971, 'Graettinger', 'IA', 94, 150),
+(266, 'Cahone', 'CO', 116, 127);
+
+
+
+
+#Q7. Query a list of CITY and STATE from the STATION table
+select city,state from station;
+
+#Q8. Query a list of CITY names from STATION for cities that have an even ID number. Print the results in any order, but exclude duplicates from the answer.
+select  distinct(city) from station where (id % 2) = 0;
+
+#Q9. Find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table
+select count(city),count(distinct(city)), ((count(distinct(city)) - (count(city)))) as difference_of_cities from station; 
+
+#Q10. Query the two cities in STATION with the shortest and longest CITY names, as well as their
+#respective lengths (i.e.: number of characters in the name). If there is more than one smallest or
+#largest city, choose the one that comes first when ordered alphabetically
+
+
+
+#Q11. Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result
+#cannot contain duplicates.
+
+select distinct(city) from station where city like 'A%' or city like 'E%' or city like 'I%' or city like 'O%'or city like 'U%';
+
+#12. Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+
+select distinct(city) from station where city like '%a' or city like '%e' or city like '%i' or city like '%o'or city like '%u';
+
+
+#Q13. Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.Input Format
+
+select distinct(city) from station where city Not like 'A%' and city Not like 'E%' and city Not like 'I%' and city Not like 'O%' and city Not like 'U%';
+
+#14. Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+
+select distinct(city) from station where city Not like '%a' and city Not like '%e' and city Not like '%i' and city Not like '%o'and city Not like '%u';
+
+
+#Q15. Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates
+select distinct(city) from station where city Not like 'A%' and city Not like 'E%' and city Not like 'I%' and city Not like 'O%' and city Not like 'U%' 
+								   and
+								   city Not like '%a' and city Not like '%e' and city Not like '%i' and city Not like '%o'and city Not like '%u';
+ 
+
+
+#Q16. Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
+
+select distinct(city) from station where city Not like 'A%' and city Not like 'E%' and city Not like 'I%' and city Not like 'O%' and city Not like 'U%' 
+								   and
+								   city Not like '%a' and city Not like '%e' and city Not like '%i' and city Not like '%o'and city Not like '%u';
+
+
+create table if not exists product
+(
+	product_id int,
+	product_name varchar(50),
+	unit_price int,
+    Primary key(product_id)
+);    
+
+create table if not exists sales
+(
+	seller_id int,
+	product_id int,
+	buyer_id int,
+	sale_date date,
+	quantity int,
+	price int,
+    foreign key(product_id) references product(product_id)
+);
+
+insert into product values (1, 'S8', 1000),
+(2, 'G4', 800),
+(3, 'iPhone', 1400);
+
+
+insert into sales values (1, 1, 1, '2019-01-21', 2, 2000),
+						 (1, 2, 2, '2019-02-17', 1, 800),
+						 (2, 2, 3, '2019-06-02', 1, 800),
+						 (3, 3, 4, '2019-05-13', 2, 2800);
+
+
+select p.product_id, p.product_name from product p 
+inner join sales s on p.product_id = s.seller_id 
+where sale_date >  2019-03-31 limit 1;
+
+create table if not exists views
+(
+	article_id int,
+	author_id int,
+	viewer_id int,
+	view_date date
+);
+
+
+insert into views values (1, 3, 5, '2019-08-01'),
+(1, 3, 6, '2019-08-02'),
+(2, 7, 7, '2019-08-01'),
+(2, 7, 6, '2019-08-02'),
+(4, 7, 1, '2019-07-22'),
+(3, 4, 4, '2019-07-21'),
+(3, 4, 4, '2019-07-21');
+
+
+select distinct(author_id) from views where 	author_id = viewer_id order by author_id asc;
+
+
+create table if not exists Delivery
+(
+	delivery_id int,
+	customer_id int,
+	order_date date,
+	customer_pref_delivery_date date,
+    primary key (delivery_id)
+);
+
+
+insert into Delivery values (1, 1, '2019-08-01', '2019-08-02'),
+(2, 5, '2019-08-02', '2019-08-02'),
+(3, 1, '2019-08-11', '2019-08-1'),
+(4, 3, '2019-08-24', '2019-08-26'),
+(5, 4, '2019-08-21', '2019-08-22'),
+(6, 2, '2019-08-11', '2019-08-13');
+
+
+
+#Q19.
+Select 
+	round(sum(case
+				when order_date = customer_pref_delivery_date then 1 else 0
+                end)
+                *100 / count(distinct delivery_id),2) as immediate_percentage
+                from delivery;
+
+
+
+
+# Q20
+
+create table if not exists Ads
+(
+	ad_id int,
+	user_id int,
+     primary key (ad_id,user_id),
+	`action` enum 
+    );
+
+
+
+insert into Ads values   (1, 1, 'Clicked'),
+						 (2, 2, 'Clicked'),
+						 (3, 3, 'Viewed'),
+						 (5, 5, 'Ignored'),
+						 (1, 7, 'Ignored'),
+						 (2, 7, 'Viewed'),
+						 (3, 5, 'Clicked'),
+						 (1, 4, 'Viewed'),
+						 (2, 11, 'Viewed'),
+						 (1, 2, 'Clicked');
+
+
+# Que 21. Write an SQL query to find the team size of each of the employees. Return result table in any order
+
+create table if not exists Employee
+(
+	employee_id int,
+	team_id int,
+    primary key(employee_id)
+);    
+
+insert into Employee values (1, 8),
+							(2, 8),
+							(3, 8),
+							(4, 7),
+							(5, 9),
+							(6, 9);
+
+select employee_id,count(team_id) over(partition by team_id) team_size  from Employee ;
+
+
+# Que22. 
+
+create table if not exists countries
+(	
+	country_id int,
+	country_name varchar(50),
+    primary key (country_id)
+);
+
+
+
+create table if not exists weather
+(
+	country_id int,
+	weather_state int,
+	`day` date,
+    primary key (country_id, `day`)
+);
+
+
+insert into countries values (2, 'USA'),
+							(3, 'Australia'),
+							(7, 'Peru'),
+							(5, 'China'),
+							(8, 'Morocco'),
+							(9, 'Spain');
+
+
+insert into weather values (2, 15, '2019-11-01'),
+(2, 12, '2019-10-28'),
+(2, 12, '2019-10-27'),
+(3 ,-2 ,'2019-11-10'),
+(3 ,0 ,'2019-11-11'),
+(3 ,3 ,'2019-11-12'),
+(5 ,16 ,'2019-11-07'),
+(5 ,18 ,'2019-11-09'),
+(5 ,21 ,'2019-11-23'),
+(7 ,25 ,'2019-11-28'),
+(7 ,22 ,'2019-12-01'),
+(7 ,20 ,'2019-12-02'),
+(8 ,25 ,'2019-11-05'),
+(8 ,27 ,'2019-11-15'),
+(8 ,31 ,'2019-11-25'),
+(9 ,7 ,'2019-10-23'),
+(9 ,3 ,'2019-12-23');
+
+
+select c.country_name, case 
+				when (avg(w.weather_state)) < 16 then 'cold'
+				when (avg(w.weather_state)) > 16 and (avg(w.weather_state)) < 20  then 'warm'
+				else 'hot'
+			end as weather_type
+from countries c inner join weather w on c.country_id = w.country_id group by country_name;                      
+
+
+
+
+
+# Que23.
+
+create table if not exists prices
+(
+	product_id int,
+	start_date date,
+	end_date date,
+	price int,
+    primary key (product_id, start_date, end_date)
+);
+
+
+create table if not exists UnitsSold
+(
+	product_id int,
+	purchase_date date,
+	units int
+    );
+
+
+insert into prices values (1, '2019-02-17', '2019-02-28', 5),
+(1, '2019-03-01', '2019-03-22', 20),
+(2, '2019-02-01' ,'2019-02-20', 15),
+(2, '2019-02-21' , '2019-03-31', 30);
+
+insert into UnitsSold values ( 1, '2019-02-25' ,100),
+(1, '2019-03-01' ,15),
+(2, '2019-02-10' ,200),
+(2, '2019-03-22' ,30);
+
+
+select p.product_id, round(
+							sum(p.price * u.units) / sum(u.units),
+                            2) as avg_selling_price 
+from prices p inner join 
+UnitsSold u 
+on p.product_id = u.product_id and (u.purchase_date between p.start_date and p.end_date)
+group by p.product_id;
+
+# QUE24
+
+create table if not exists Activity
+(
+	player_id int,
+	device_id int,
+	event_date date,
+	games_played int,
+    primary key (player_id, event_date)
+);    
+
+
+insert into Activity values (1, 2, '2016-03-01', 5),
+(1, 2, '2016-05-02', 6),
+(2, 3, '2017-06-25', 1),
+(3, 1, '2016-03-02', 0),
+(3, 4, '2018-07-03', 5);
+
+
+select player_id, min(event_date) as first_Login 
+from Activity
+group by player_id;
+
+
+# QUE25 is the repeated que 
+
+#QUE26 **(Answer Not Coming)
+
+create table if not exists products
+(
+	product_id int,
+	product_name varchar(50),
+	product_category varchar(50),
+	primary key ( product_id)
+);    
+
+
+create table if not exists Orders
+(
+	product_id int,
+	order_date date,
+	unit int,
+    foreign key(product_id) references products(product_id)
+    );
+    
+    
+insert into products values (1, 'Leetcode Solutions', 'Book'),
+(2, 'Jewels of Stringology' ,'Book'),
+(3, 'HP', 'Laptop'),
+(4, 'Lenovo', 'Laptop'),
+(5, 'Leetcode Kit', 'T-shirt');
+
+    
+ insert into Orders values (   1, '2020-02-05', 60),
+(1, '2020-02-10' ,70),
+(2, '2020-01-18' ,30),
+(2 ,'2020-02-11' ,80),
+(3 ,'2020-02-17' ,2),
+(3 ,'2020-02-24' ,3),
+(4 ,'2020-03-01' ,20),
+(4 ,'2020-03-04' ,30),
+(4 ,'2020-03-04' ,60),
+(5 ,'2020-02-25' ,50),
+(5 ,'2020-02-27' ,50),
+(5 ,'2020-03-01' ,50);
+    
+    
+select p.product_name, 
+	   sum(o.unit) as units
+from products p inner join orders o 
+on p.product_id = o.product_id 
+where o.order_date = (select  o.order_date from orders where  o.order_date  between '2020-02-01' and '2020-03-01') and o.unit >= 100
+group by p.product_id;        
+      
+         
+ # QUE 27   
+    
+create table if not exists Users
+( 
+		user_id int,
+		name varchar(50),
+		mail varchar(50),
+		primary key  (user_id)
+)  ; 
+    
+    
+    
+insert into Users values (1, 'Winston', 'winston@leetcode.com'),
+(2, 'Jonathan', 'jonathanisgreat'),
+(3, 'Annabelle', 'bella-@leetcode.com'),
+(4, 'Sally', 'sally.come@leetcode.com'),
+(5, 'Marwan', 'quarz#2020@leetcode.com'),
+(6, 'David', 'david69@gmail.com'),
+(7, 'Shapiro', '.shapo@leetcode.com'); 
+    
+select * 
+		from Users where REGEXP_LIKE 
+		(mail,'^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com');
+        
+    
+    
+create table if not exists customer
+(
+    customer_id int,
+	name varchar(50),
+	country varchar(50),
+    primary key (customer_id)
+);    
+  
+    
+  insert into customer values (1, 'Winston', 'USA'),
+(2, 'Jonathan', 'Peru'),
+(3, 'Moustafa', 'Egypt');
+  
+    
+
+      
+create table if not exists product1
+(
+	product_id int,
+	description varchar(50),
+	price int ,
+    primary key (product_id)
+);
+    
+ insert into product1 values (10, 'LC Phone', 300),
+(20, 'LC T-Shirt', 10),
+(30, 'LC Book', 45),
+(40, 'LC Keychain' ,2);   
+    
+
+drop table product1;
+    
+     
+create table if not exists  Orders1
+(
+	order_id int,
+	customer_id int,
+	product_id int,
+	order_date date,
+	quantity int ,
+    primary key (order_id)
+);    
+    
+ insert into Orders1 values (1, 1, 10, '2020-06-10' ,1),
+(2, 1, 20, '2020-07-01' ,1),
+(3, 1, 30, '2020-07-08',2),
+(4, 2, 10, '2020-06-15' ,2),
+(5, 2, 40, '2020-07-01' ,10),
+(6, 3, 20,'2020-06-24' ,2),
+(7, 3, 30, '2020-06-25' ,2),
+(9, 3, 30, '2020-05-08' ,3);   
+    
+    
+#rite an SQL query to report the customer_id and customer_name of customers who have spent at
+#least $100 in each month of June and July 2020.
+#Return the result table in any order.
+#The query result format is in the following example.;  
+    
+    
+select c.customer_id, 
+	   c.name
+from customer c 
+inner join 
+			(select * from Orders1 
+            where order_date Between '2020-06-01' AND '2020-07-31' ) as o
+            on c.customer_id = o.customer_id
+inner join Product1 as p
+					on p.product_id = o.product_id
+group by c.customer_id
+Having sum(case
+				when left(o.order_date, 7) = '2020-06' then p.price * o.quantity
+                else 0
+               end ) >= 100
+AND sum(case
+			when left(o.order_date,7 ) = '2020-07' then p.price * o.quantity
+			else 0 
+			end) > 100
+order by null;            
+    
+    
+    select o.customer_id,c.name 
+    from customer c , product1 p ,Orders1 o
+    where c.customer_id - o.customer_id and p.product_id = o.product_id
+    group by o.customer_id
+    having 
+    (
+		sum(case
+				when o.order_date like  '2020-06%' then p.price * o.quantity
+                else 0
+               end ) >= 100
+AND sum(case
+			when o.order_date like '2020-07%' then p.price * o.quantity
+			else 0 
+			end) >= 100
+            );
+    
+    
+    
+    
+# QUE 29
+
+create table if not exists TVprogram
+(
+	program_date date,
+	content_id int,
+	channel varchar(50),
+	primary key(program_date,content_id)
+);
+    
+    
+create table if not exists Content
+(
+content_id varchar(50),
+title varchar(50),
+Kids_content enum('Y','N'),
+content_type varchar(50),
+primary key (content_id)
+);
+    
+    
+    
+    
+insert into TVprogram values ('2020-06-10 08:00', 1, 'LC-Channel'),
+('2020-05-11 12:00', 2, 'LC-Channel'),
+('2020-05-12 12:00', 3, 'LC-Channel'),
+('2020-05-13 14:00', 4, 'Disney Ch'),
+('2020-06-18 14:00', 4, 'Disney Ch'),
+('2020-07-15 16:00', 5, 'Disney Ch');  
+
+    
+    
+    
+ insert into Content values (1, 'Leetcode Movie', 'N', 'Movies'),
+(2, 'Alg. for Kids', 'Y', 'Series'),
+(3, 'Database Sols', 'N', 'Series'),
+(4, 'Aladdin', 'Y', 'Movies'),
+(5, 'Cinderella', 'Y', 'Movies')  ;
+
+
+# Write an SQL query to report the distinct titles of the kid-friendly movies streamed in June 2020. Return the result table in any order
+    
+ select distinct( c.title)  
+ from TVprogram p 
+ left join 
+ Content c 
+ on p.content_id = c.content_id
+ where Date_format(p.program_date,'%Y-%m') = '2020-06'
+ AND c.Kids_content = 'Y'
+ AND c.content_type = 'Movies';
+    
+# QUE30
+create table if not exists NPV
+(
+id int,
+`year` int,
+npv int,
+primary key(id,`year`)
+);    
+    
+create table if not exists Queries
+(
+id int,
+`year` int,
+primary Key(id , `year`)
+);
+    
+insert into NPV values ( 1, 2018, 100),
+(7, 2020, 30),
+(13, 2019, 40),
+(1, 2019, 113),
+(2, 2008, 121),
+(3, 2009, 12),
+(11, 2020, 99),
+(7, 2019, 0);    
+    
+ insert into Queries values   (1, 2019),
+(2, 2008),
+(3, 2009),
+(7, 2018),
+(7, 2019),
+(7, 2020),
+(13, 2019);
+   
+# Write an SQL query to find the npv of each query of the Queries table. Return the result table in any order   
+    
+ select q.id, a.`year`,ifnull(npv,0) as npv   
+  from NPV a inner join
+  Queries q 
+  on a.id = q.id 
+  and 
+  a.`year` = q.`year`
+ order by q.id;   
+    
+#QUE31 ( REPEATED QUESTION ) 
+
+    
+#QUE32
+    
+create table if not exists Employee1
+(
+id int,
+`name` varchar(50),
+primary key(id)
+);
+    
+ create table if not exists EmployeeUNI
+ (
+ id int,
+unique_id int,
+primary key(id,Unique_id)
+); 
+    
+insert into Employee1 values (1, 'Alice'),
+(7, 'Bob'),
+(11, 'Meir'),
+(90, 'Winston'),
+(3, 'Jonathan' );   
+    
+insert into EmployeeUNI values (3, 1),
+(11, 2),
+(90, 3 );   
+
+# Write an SQL query to show the unique ID of each user, If a user does not have a unique ID replace just show null. Return the result table in any order.
+
+    
+select a.`name`, ifnull(unique_id,null)    
+from Employee1 a 
+left join 
+EmployeeUNI b 
+on a.id = b.id ;   
+    
+    
+ #QUE33
+ 
+ create table if not exists users1
+ (
+ id int,
+`name` varchar(50),
+primary key(id)
+);
+ 
+ create table if not exists rides    
+(
+id int,
+user_id int,
+distance int,
+primary key(id)
+);    
+    
+ insert into users1 values (  1, 'Alice'),
+(2, 'Bob'),
+(3, 'Alex'),
+(4, 'Donald'),
+(7, 'Lee');
+    
+  insert into rides values(  1, 1 ,120),
+(2, 2, 317),
+(3, 3, 222),
+(4, 7, 100),
+(5, 13, 312),
+(6, 19, 50),
+(7, 7, 120),
+(8, 19, 400),
+(9, 7, 230);
+    
+# Write an SQL query to report the distance travelled by each user.return the result table ordered by travelled_distance in descending order,
+# if two or more users travelled the same distance, order them by their name in ascending order.
+
+
+select name, sum(ifnull(distance , 0)) as travelled_distance
+from  users1 u
+left join     rides r
+on r.user_id = u.id
+group by name 
+order by 2 desc , 1 asc; 
+    
+    
+#QUE34 
+
+create table if not exists products1
+(
+product_id int,
+product_name varchar(50),
+product_category varchar(50),
+primary key(product_id)
+);
+
+create table if not exists Orders2
+(
+product_id int,
+order_date date,
+unit int,
+foreign key(product_id) references products1(product_id)
+);
+    
+    
+#( INCOMPLETE INFO)
+
+
+#QUE35 
+create table if not exists Movies
+(
+movie_id int,
+title varchar(50),
+primary key(movie_id)
+);
+
+ create table if not exists Users2
+ (
+ user_id int,
+name varchar(50),
+primary key(user_id)
+);
+    
+create table if not exists MovieRating
+(
+movie_id int,
+user_id int,
+rating int,
+created_at date,
+primary key(movie_id , user_id) 
+);   
+    
+insert into Movies values (1, 'Avengers'),
+(2, 'Frozen 2'),
+(3,'Joker');    
+    
+    insert into MovieRating values(1, 1, 3, '2020-01-12'),
+(1, 2, 4 ,'2020-02-11'),
+(1, 3, 2 ,'2020-02-12'),
+(1, 4, 1 ,'2020-01-01'),
+(2, 1, 5 ,'2020-02-17'),
+(2,2, 2 ,'2020-02-01'),
+(2, 3, 2 ,'2020-03-01'),
+(3, 1, 3 ,'2020-02-22'),
+(3, 2, 4 ,'2020-02-25');
+    
+  insert into users2 values   (1, 'Daniel'),
+(2 ,'Monica'),
+(3 ,'Maria'),
+(4 ,'James');
+    
+select user_name as results from 
+(
+select a.name as user_name,count(*) as counts from MovieRating as b
+		join users2 as a 
+        on a.user_id = b.user_id
+        Group BY b.user_id
+        order by counts desc, user_name asc limit 1
+        )first_query
+Union
+select movie_name as results from 
+(
+select c.title as movie_name, avg(d.rating) as rate from MovieRating as d
+			join Movies as c
+            on c.movie_id = d.movie_id
+            where substr(d.created_at, 1, 7) = '2020-02'
+            group by d.movie_id
+            order by rate desc, movie_name asc limit 1
+            )second_query;
+    
+   #QUES36 -------------REPEATED------------------------------- 
+   #QUES37 -------------------REPEATED----------------------------- 
+    
+    
+    
+   #QUE38 
+    
+create table if not exists Departments
+(
+    id int,
+	name varchar(50),
+    Primary key(id)
+);
+    
+ create table if not exists students
+ (
+ id int,
+name varchar(50),
+department_id int,
+Primary key(id)
+);
+    
+    
+insert into Departments values (1, 'Electrical Engineering'),
+(7, 'Computer Engineering'),
+(13, 'Business Administration');
+    
+ insert into students values(   23, 'Alice',1 ),
+(1 ,'Bob' ,7),
+(5 ,'Jennifer', 13),
+(2 ,'John' ,14),
+(4 ,'Jasmine', 77),
+(3 ,'Steve' ,74),
+(6 ,'Luis' ,1),
+(8 ,'Jonathan', 7),
+(7 ,'Daiana' ,33),
+(11 ,'Madelynn', 1);
+    
+    
+select s.id, s.name,ifnull(d.name,'not Enrolled' ) as Dept_name
+from students s
+left join
+Departments d 
+on s.department_id = d.id
+where d.id is null ;   
+    
+#QUE39
+    
+ create table if not exists Calls
+ (
+from_id int,
+to_id int,
+duration int
+);
+    
+insert into Calls values(1, 2, 59),
+(2 ,1, 11),
+(1, 3, 20),
+(3, 4, 100),
+(3, 4, 200),
+(3, 4, 200),
+(4, 3, 499);    
+    
+select least(from_id ,to_id) AS person1, greatest(from_id, to_id) AS person2,
+COUNT(*) AS call_count,
+sum(duration) AS total_duration
+From Calls
+group by person1,person2;
+    
+    
+    
+#QUE40 (Repeated QUES23)
+    
+ #Solution is : 
+ 
+ #select p.product_id, round(sum(p.price * u.units) / sum(u.units), 2) as average_selling_price
+ #from price p 
+ #inner join
+ #UnitsSold u 
+#on p.product_id = u.product_id and (u.purchase_date between p.start_date and p.end_date)
+ #group by p.product_id;
+    
+ 
+ #QUE41
+ create table if not exists Warehouse
+(
+name varchar(50),
+product_id int,
+units int,
+primary key(name, product_id)
+);    
+    
+    
+ create table if not exists products2
+ (
+ 
+product_id int,
+product_name varchar(50),
+Width int,
+Length int,
+Height int,
+primary key(product_id)
+);
+    
+    
+insert into Warehouse values ('LCHouse1', 1, 1),
+('LCHouse1', 2, 10),
+('LCHouse1', 3, 5),
+('LCHouse2', 1, 2),
+('LCHouse2', 2, 2),
+('LCHouse3', 4, 1);    
+    
+ insert into products2 values (1, 'LC-TV', 5, 50, 40),
+(2 ,'LC-KeyChain', 5, 5, 5),
+(3 ,'LC-Phone', 2, 10 ,10),
+(4 ,'LC-T-Shirt', 4, 10, 20);   
+    
+# Write an SQL query to report the number of cubic feet of volume the inventory occupies in each warehouse. Return the result table in any order   
+    
+    
+  select warehouse_name, sum(volume) as volume from (
+													select w.name as warehouse_name , w.units * width *length * Height as volume
+                                                    from  Warehouse w left join products2 p 
+                                                    on w.product_id = p.product_id
+                                                   ) t
+group by warehouse_name;                                                   
+    
+    
+create table if not exists  Sales1
+(
+sale_date date,
+fruit enum('apples','oranges'),
+sold_num int,
+primary key(sale_date,fruit)
+);
+    
+drop table Sales1;    
+    
+insert into Sales1 values ('2020-05-01', 'apples', 10),
+('2020-05-01', 'oranges', 8),
+('2020-05-02', 'apples', 15),
+('2020-05-02', 'oranges', 15),
+('2020-05-03', 'apples', 20),
+('2020-05-03', 'oranges', 0),
+('2020-05-04', 'apples', 15),
+('2020-05-04', 'oranges', 16);
+
+#QUE42 Write an SQL query to report the difference between the number of apples and oranges sold each day. Return the result table ordered by sale_date.
+
+    
+    
+    
+ select a.sale_date, a.sold_num - b.sold_num
+ from Sales1 a left join Sales b
+ on a.sale_date = b.sale_date
+ where a.fruit = 'apples' and b.fruit = 'oranges'
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    create database set1;
+
+use set1;
+
+
+create table if not exists city
+(
+	id int,
+    `name` varchar(50),
+    CountryCode varchar(50),
+    district varchar(50),
+    population BIGINT
+);
+    
+    select * from city;
+    
+    insert into city values (6,'Rotterdam','NLD','Zuid-Holland',593321),
+							(3878, 'Scottsdale', 'USA', 'Arizona', 202705),
+							(3965, 'Corona', 'USA', 'California', 124966),
+							(3973 ,'Concord', 'USA', 'California', 121780),
+							(3977, 'Cedar Rapids', 'USA', 'Iowa', 120758),
+							(3982, 'Coral Springs', 'USA', 'Florida', 117549),
+							(4054, 'Fairfield', 'USA', 'California', 92256),
+							(4058, 'Boulder', 'USA', 'Colorado', 91238),
+							(4061, 'Fall River', 'USA', 'Massachusetts', 90555);
+                            
+
+#Q1. Query all columns for all American cities in the CITY table with populations larger than 100000.The CountryCode for America is USA.
+#The CITY table is described as follows:
+
+select * from city where countrycode = 'USA' and population >100000;
+
+#Q2. Query the NAME field for all American cities in the CITY table with populations larger than 120000.The CountryCode for America is USA.
+#The CITY table is described as follows:
+
+select * from city where countrycode = 'USA' and population >120000;
+
+
+
+#Q3. Query all columns (attributes) for every row in the CITY table.The CITY table is described as follows:
+
+	select * from city;
+
+#Q4. Query all columns for a city in CITY with the ID 1661.The CITY table is described as follows:
+
+select * from city where id = 1661;
+
+#Q5. Query all attributes of every Japanese city in the CITY table. The COUNTRYCODE for Japan is JPN.
+
+select * from city where countrycode = 'JPN';
+
+#Q6. Query the names of all the Japanese cities in the CITY table. The COUNTRYCODE for Japan is JPN.
+select name, countrycode from city where countrycode ='JPN';
+
+create table if not exists station
+(
+	ID INT,
+    CITY varchar(21),
+    STATE varchar(2),
+    LAT_N  int ,
+    LONG_W int
+);
+
+insert into station values (794, 'Kissee Mills', 'MO', 139, 73),
+(824, 'Loma Mar', 'CA', 48, 130),
+(603, 'Sandy Hook', 'CT', 72, 148),
+(478, 'Tipton', 'IN', 33, 97),
+(619, 'Arlington', 'CO', 75, 92),
+(711, 'Turnerx', 'AR', 50, 101),
+(839, 'Slidell', 'LA', 85, 151),
+(411, 'Negreet', 'LA', 98, 105),
+(588, 'Glencoe', 'KY', 46, 136),
+(665, 'Chelsea', 'IA', 98, 59),
+(342, 'Chignik Lagoon', 'AK', 103, 153),
+(733, 'Pelahatchie', 'MS', 38, 28),
+(441, 'Hanna City', 'IL', 50, 136),
+(811, 'Dorrance', 'KS', 102, 121),
+(698, 'Albany', 'CA', 49, 80),
+(325, 'Monument', 'KS', 70, 141),
+(414, 'Manchester', 'MD', 73, 37),
+(113, 'Prescott', 'IA', 39, 65),
+(971, 'Graettinger', 'IA', 94, 150),
+(266, 'Cahone', 'CO', 116, 127);
+
+
+
+
+#Q7. Query a list of CITY and STATE from the STATION table
+select city,state from station;
+
+#Q8. Query a list of CITY names from STATION for cities that have an even ID number. Print the results in any order, but exclude duplicates from the answer.
+select  distinct(city) from station where (id % 2) = 0;
+
+#Q9. Find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table
+select count(city),count(distinct(city)), ((count(distinct(city)) - (count(city)))) as difference_of_cities from station; 
+
+#Q10. Query the two cities in STATION with the shortest and longest CITY names, as well as their
+#respective lengths (i.e.: number of characters in the name). If there is more than one smallest or
+#largest city, choose the one that comes first when ordered alphabetically
+
+
+
+#Q11. Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result
+#cannot contain duplicates.
+
+select distinct(city) from station where city like 'A%' or city like 'E%' or city like 'I%' or city like 'O%'or city like 'U%';
+
+#12. Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+
+select distinct(city) from station where city like '%a' or city like '%e' or city like '%i' or city like '%o'or city like '%u';
+
+
+#Q13. Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.Input Format
+
+select distinct(city) from station where city Not like 'A%' and city Not like 'E%' and city Not like 'I%' and city Not like 'O%' and city Not like 'U%';
+
+#14. Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+
+select distinct(city) from station where city Not like '%a' and city Not like '%e' and city Not like '%i' and city Not like '%o'and city Not like '%u';
+
+
+#Q15. Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates
+select distinct(city) from station where city Not like 'A%' and city Not like 'E%' and city Not like 'I%' and city Not like 'O%' and city Not like 'U%' 
+								   and
+								   city Not like '%a' and city Not like '%e' and city Not like '%i' and city Not like '%o'and city Not like '%u';
+ 
+
+
+#Q16. Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
+
+select distinct(city) from station where city Not like 'A%' and city Not like 'E%' and city Not like 'I%' and city Not like 'O%' and city Not like 'U%' 
+								   and
+								   city Not like '%a' and city Not like '%e' and city Not like '%i' and city Not like '%o'and city Not like '%u';
+
+
+create table if not exists product
+(
+	product_id int,
+	product_name varchar(50),
+	unit_price int,
+    Primary key(product_id)
+);    
+
+create table if not exists sales
+(
+	seller_id int,
+	product_id int,
+	buyer_id int,
+	sale_date date,
+	quantity int,
+	price int,
+    foreign key(product_id) references product(product_id)
+);
+
+insert into product values (1, 'S8', 1000),
+(2, 'G4', 800),
+(3, 'iPhone', 1400);
+
+
+insert into sales values (1, 1, 1, '2019-01-21', 2, 2000),
+						 (1, 2, 2, '2019-02-17', 1, 800),
+						 (2, 2, 3, '2019-06-02', 1, 800),
+						 (3, 3, 4, '2019-05-13', 2, 2800);
+
+
+select p.product_id, p.product_name from product p 
+inner join sales s on p.product_id = s.seller_id 
+where sale_date >  2019-03-31 limit 1;
+
+create table if not exists views
+(
+	article_id int,
+	author_id int,
+	viewer_id int,
+	view_date date
+);
+
+
+insert into views values (1, 3, 5, '2019-08-01'),
+(1, 3, 6, '2019-08-02'),
+(2, 7, 7, '2019-08-01'),
+(2, 7, 6, '2019-08-02'),
+(4, 7, 1, '2019-07-22'),
+(3, 4, 4, '2019-07-21'),
+(3, 4, 4, '2019-07-21');
+
+
+select distinct(author_id) from views where 	author_id = viewer_id order by author_id asc;
+
+
+create table if not exists Delivery
+(
+	delivery_id int,
+	customer_id int,
+	order_date date,
+	customer_pref_delivery_date date,
+    primary key (delivery_id)
+);
+
+
+insert into Delivery values (1, 1, '2019-08-01', '2019-08-02'),
+(2, 5, '2019-08-02', '2019-08-02'),
+(3, 1, '2019-08-11', '2019-08-1'),
+(4, 3, '2019-08-24', '2019-08-26'),
+(5, 4, '2019-08-21', '2019-08-22'),
+(6, 2, '2019-08-11', '2019-08-13');
+
+
+
+#Q19.
+Select 
+	round(sum(case
+				when order_date = customer_pref_delivery_date then 1 else 0
+                end)
+                *100 / count(distinct delivery_id),2) as immediate_percentage
+                from delivery;
+
+
+
+
+# Q20
+
+create table if not exists Ads
+(
+	ad_id int,
+	user_id int,
+     primary key (ad_id,user_id),
+	`action` enum 
+    );
+
+
+
+insert into Ads values   (1, 1, 'Clicked'),
+						 (2, 2, 'Clicked'),
+						 (3, 3, 'Viewed'),
+						 (5, 5, 'Ignored'),
+						 (1, 7, 'Ignored'),
+						 (2, 7, 'Viewed'),
+						 (3, 5, 'Clicked'),
+						 (1, 4, 'Viewed'),
+						 (2, 11, 'Viewed'),
+						 (1, 2, 'Clicked');
+
+
+# Que 21. Write an SQL query to find the team size of each of the employees. Return result table in any order
+
+create table if not exists Employee
+(
+	employee_id int,
+	team_id int,
+    primary key(employee_id)
+);    
+
+insert into Employee values (1, 8),
+							(2, 8),
+							(3, 8),
+							(4, 7),
+							(5, 9),
+							(6, 9);
+
+select employee_id,count(team_id) over(partition by team_id) team_size  from Employee ;
+
+
+# Que22. 
+
+create table if not exists countries
+(	
+	country_id int,
+	country_name varchar(50),
+    primary key (country_id)
+);
+
+
+
+create table if not exists weather
+(
+	country_id int,
+	weather_state int,
+	`day` date,
+    primary key (country_id, `day`)
+);
+
+
+insert into countries values (2, 'USA'),
+							(3, 'Australia'),
+							(7, 'Peru'),
+							(5, 'China'),
+							(8, 'Morocco'),
+							(9, 'Spain');
+
+
+insert into weather values (2, 15, '2019-11-01'),
+(2, 12, '2019-10-28'),
+(2, 12, '2019-10-27'),
+(3 ,-2 ,'2019-11-10'),
+(3 ,0 ,'2019-11-11'),
+(3 ,3 ,'2019-11-12'),
+(5 ,16 ,'2019-11-07'),
+(5 ,18 ,'2019-11-09'),
+(5 ,21 ,'2019-11-23'),
+(7 ,25 ,'2019-11-28'),
+(7 ,22 ,'2019-12-01'),
+(7 ,20 ,'2019-12-02'),
+(8 ,25 ,'2019-11-05'),
+(8 ,27 ,'2019-11-15'),
+(8 ,31 ,'2019-11-25'),
+(9 ,7 ,'2019-10-23'),
+(9 ,3 ,'2019-12-23');
+
+
+select c.country_name, case 
+				when (avg(w.weather_state)) < 16 then 'cold'
+				when (avg(w.weather_state)) > 16 and (avg(w.weather_state)) < 20  then 'warm'
+				else 'hot'
+			end as weather_type
+from countries c inner join weather w on c.country_id = w.country_id group by country_name;                      
+
+
+
+
+
+# Que23.
+
+create table if not exists prices
+(
+	product_id int,
+	start_date date,
+	end_date date,
+	price int,
+    primary key (product_id, start_date, end_date)
+);
+
+
+create table if not exists UnitsSold
+(
+	product_id int,
+	purchase_date date,
+	units int
+    );
+
+
+insert into prices values (1, '2019-02-17', '2019-02-28', 5),
+(1, '2019-03-01', '2019-03-22', 20),
+(2, '2019-02-01' ,'2019-02-20', 15),
+(2, '2019-02-21' , '2019-03-31', 30);
+
+insert into UnitsSold values ( 1, '2019-02-25' ,100),
+(1, '2019-03-01' ,15),
+(2, '2019-02-10' ,200),
+(2, '2019-03-22' ,30);
+
+
+select p.product_id, round(
+							sum(p.price * u.units) / sum(u.units),
+                            2) as avg_selling_price 
+from prices p inner join 
+UnitsSold u 
+on p.product_id = u.product_id and (u.purchase_date between p.start_date and p.end_date)
+group by p.product_id;
+
+# QUE24
+
+create table if not exists Activity
+(
+	player_id int,
+	device_id int,
+	event_date date,
+	games_played int,
+    primary key (player_id, event_date)
+);    
+
+
+insert into Activity values (1, 2, '2016-03-01', 5),
+(1, 2, '2016-05-02', 6),
+(2, 3, '2017-06-25', 1),
+(3, 1, '2016-03-02', 0),
+(3, 4, '2018-07-03', 5);
+
+
+select player_id, min(event_date) as first_Login 
+from Activity
+group by player_id;
+
+
+# QUE25 is the repeated que 
+
+#QUE26 **(Answer Not Coming)
+
+create table if not exists products
+(
+	product_id int,
+	product_name varchar(50),
+	product_category varchar(50),
+	primary key ( product_id)
+);    
+
+
+create table if not exists Orders
+(
+	product_id int,
+	order_date date,
+	unit int,
+    foreign key(product_id) references products(product_id)
+    );
+    
+    
+insert into products values (1, 'Leetcode Solutions', 'Book'),
+(2, 'Jewels of Stringology' ,'Book'),
+(3, 'HP', 'Laptop'),
+(4, 'Lenovo', 'Laptop'),
+(5, 'Leetcode Kit', 'T-shirt');
+
+    
+ insert into Orders values (   1, '2020-02-05', 60),
+(1, '2020-02-10' ,70),
+(2, '2020-01-18' ,30),
+(2 ,'2020-02-11' ,80),
+(3 ,'2020-02-17' ,2),
+(3 ,'2020-02-24' ,3),
+(4 ,'2020-03-01' ,20),
+(4 ,'2020-03-04' ,30),
+(4 ,'2020-03-04' ,60),
+(5 ,'2020-02-25' ,50),
+(5 ,'2020-02-27' ,50),
+(5 ,'2020-03-01' ,50);
+    
+    
+select p.product_name, 
+	   sum(o.unit) as units
+from products p inner join orders o 
+on p.product_id = o.product_id 
+where o.order_date = (select  o.order_date from orders where  o.order_date  between '2020-02-01' and '2020-03-01') and o.unit >= 100
+group by p.product_id;        
+      
+         
+ # QUE 27   
+    
+create table if not exists Users
+( 
+		user_id int,
+		name varchar(50),
+		mail varchar(50),
+		primary key  (user_id)
+)  ; 
+    
+    
+    
+insert into Users values (1, 'Winston', 'winston@leetcode.com'),
+(2, 'Jonathan', 'jonathanisgreat'),
+(3, 'Annabelle', 'bella-@leetcode.com'),
+(4, 'Sally', 'sally.come@leetcode.com'),
+(5, 'Marwan', 'quarz#2020@leetcode.com'),
+(6, 'David', 'david69@gmail.com'),
+(7, 'Shapiro', '.shapo@leetcode.com'); 
+    
+select * 
+		from Users where REGEXP_LIKE 
+		(mail,'^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com');
+        
+    
+    
+create table if not exists customer
+(
+    customer_id int,
+	name varchar(50),
+	country varchar(50),
+    primary key (customer_id)
+);    
+  
+    
+  insert into customer values (1, 'Winston', 'USA'),
+(2, 'Jonathan', 'Peru'),
+(3, 'Moustafa', 'Egypt');
+  
+    
+
+      
+create table if not exists product1
+(
+	product_id int,
+	description varchar(50),
+	price int ,
+    primary key (product_id)
+);
+    
+ insert into product1 values (10, 'LC Phone', 300),
+(20, 'LC T-Shirt', 10),
+(30, 'LC Book', 45),
+(40, 'LC Keychain' ,2);   
+    
+
+drop table product1;
+    
+     
+create table if not exists  Orders1
+(
+	order_id int,
+	customer_id int,
+	product_id int,
+	order_date date,
+	quantity int ,
+    primary key (order_id)
+);    
+    
+ insert into Orders1 values (1, 1, 10, '2020-06-10' ,1),
+(2, 1, 20, '2020-07-01' ,1),
+(3, 1, 30, '2020-07-08',2),
+(4, 2, 10, '2020-06-15' ,2),
+(5, 2, 40, '2020-07-01' ,10),
+(6, 3, 20,'2020-06-24' ,2),
+(7, 3, 30, '2020-06-25' ,2),
+(9, 3, 30, '2020-05-08' ,3);   
+    
+    
+#rite an SQL query to report the customer_id and customer_name of customers who have spent at
+#least $100 in each month of June and July 2020.
+#Return the result table in any order.
+#The query result format is in the following example.;  
+    
+    
+select c.customer_id, 
+	   c.name
+from customer c 
+inner join 
+			(select * from Orders1 
+            where order_date Between '2020-06-01' AND '2020-07-31' ) as o
+            on c.customer_id = o.customer_id
+inner join Product1 as p
+					on p.product_id = o.product_id
+group by c.customer_id
+Having sum(case
+				when left(o.order_date, 7) = '2020-06' then p.price * o.quantity
+                else 0
+               end ) >= 100
+AND sum(case
+			when left(o.order_date,7 ) = '2020-07' then p.price * o.quantity
+			else 0 
+			end) > 100
+order by null;            
+    
+    
+    select o.customer_id,c.name 
+    from customer c , product1 p ,Orders1 o
+    where c.customer_id - o.customer_id and p.product_id = o.product_id
+    group by o.customer_id
+    having 
+    (
+		sum(case
+				when o.order_date like  '2020-06%' then p.price * o.quantity
+                else 0
+               end ) >= 100
+AND sum(case
+			when o.order_date like '2020-07%' then p.price * o.quantity
+			else 0 
+			end) >= 100
+            );
+    
+    
+    
+    
+# QUE 29
+
+create table if not exists TVprogram
+(
+	program_date date,
+	content_id int,
+	channel varchar(50),
+	primary key(program_date,content_id)
+);
+    
+    
+create table if not exists Content
+(
+content_id varchar(50),
+title varchar(50),
+Kids_content enum('Y','N'),
+content_type varchar(50),
+primary key (content_id)
+);
+    
+    
+    
+    
+insert into TVprogram values ('2020-06-10 08:00', 1, 'LC-Channel'),
+('2020-05-11 12:00', 2, 'LC-Channel'),
+('2020-05-12 12:00', 3, 'LC-Channel'),
+('2020-05-13 14:00', 4, 'Disney Ch'),
+('2020-06-18 14:00', 4, 'Disney Ch'),
+('2020-07-15 16:00', 5, 'Disney Ch');  
+
+    
+    
+    
+ insert into Content values (1, 'Leetcode Movie', 'N', 'Movies'),
+(2, 'Alg. for Kids', 'Y', 'Series'),
+(3, 'Database Sols', 'N', 'Series'),
+(4, 'Aladdin', 'Y', 'Movies'),
+(5, 'Cinderella', 'Y', 'Movies')  ;
+
+
+# Write an SQL query to report the distinct titles of the kid-friendly movies streamed in June 2020. Return the result table in any order
+    
+ select distinct( c.title)  
+ from TVprogram p 
+ left join 
+ Content c 
+ on p.content_id = c.content_id
+ where Date_format(p.program_date,'%Y-%m') = '2020-06'
+ AND c.Kids_content = 'Y'
+ AND c.content_type = 'Movies';
+    
+# QUE30
+create table if not exists NPV
+(
+id int,
+`year` int,
+npv int,
+primary key(id,`year`)
+);    
+    
+create table if not exists Queries
+(
+id int,
+`year` int,
+primary Key(id , `year`)
+);
+    
+insert into NPV values ( 1, 2018, 100),
+(7, 2020, 30),
+(13, 2019, 40),
+(1, 2019, 113),
+(2, 2008, 121),
+(3, 2009, 12),
+(11, 2020, 99),
+(7, 2019, 0);    
+    
+ insert into Queries values   (1, 2019),
+(2, 2008),
+(3, 2009),
+(7, 2018),
+(7, 2019),
+(7, 2020),
+(13, 2019);
+   
+# Write an SQL query to find the npv of each query of the Queries table. Return the result table in any order   
+    
+ select q.id, a.`year`,ifnull(npv,0) as npv   
+  from NPV a inner join
+  Queries q 
+  on a.id = q.id 
+  and 
+  a.`year` = q.`year`
+ order by q.id;   
+    
+#QUE31 ( REPEATED QUESTION ) 
+
+    
+#QUE32
+    
+create table if not exists Employee1
+(
+id int,
+`name` varchar(50),
+primary key(id)
+);
+    
+ create table if not exists EmployeeUNI
+ (
+ id int,
+unique_id int,
+primary key(id,Unique_id)
+); 
+    
+insert into Employee1 values (1, 'Alice'),
+(7, 'Bob'),
+(11, 'Meir'),
+(90, 'Winston'),
+(3, 'Jonathan' );   
+    
+insert into EmployeeUNI values (3, 1),
+(11, 2),
+(90, 3 );   
+
+# Write an SQL query to show the unique ID of each user, If a user does not have a unique ID replace just show null. Return the result table in any order.
+
+    
+select a.`name`, ifnull(unique_id,null)    
+from Employee1 a 
+left join 
+EmployeeUNI b 
+on a.id = b.id ;   
+    
+    
+ #QUE33
+ 
+ create table if not exists users1
+ (
+ id int,
+`name` varchar(50),
+primary key(id)
+);
+ 
+ create table if not exists rides    
+(
+id int,
+user_id int,
+distance int,
+primary key(id)
+);    
+    
+ insert into users1 values (  1, 'Alice'),
+(2, 'Bob'),
+(3, 'Alex'),
+(4, 'Donald'),
+(7, 'Lee');
+    
+  insert into rides values(  1, 1 ,120),
+(2, 2, 317),
+(3, 3, 222),
+(4, 7, 100),
+(5, 13, 312),
+(6, 19, 50),
+(7, 7, 120),
+(8, 19, 400),
+(9, 7, 230);
+    
+# Write an SQL query to report the distance travelled by each user.return the result table ordered by travelled_distance in descending order,
+# if two or more users travelled the same distance, order them by their name in ascending order.
+
+
+select name, sum(ifnull(distance , 0)) as travelled_distance
+from  users1 u
+left join     rides r
+on r.user_id = u.id
+group by name 
+order by 2 desc , 1 asc; 
+    
+    
+#QUE34 
+
+create table if not exists products1
+(
+product_id int,
+product_name varchar(50),
+product_category varchar(50),
+primary key(product_id)
+);
+
+create table if not exists Orders2
+(
+product_id int,
+order_date date,
+unit int,
+foreign key(product_id) references products1(product_id)
+);
+    
+    
+#( INCOMPLETE INFO)
+
+
+#QUE35 
+create table if not exists Movies
+(
+movie_id int,
+title varchar(50),
+primary key(movie_id)
+);
+
+ create table if not exists Users2
+ (
+ user_id int,
+name varchar(50),
+primary key(user_id)
+);
+    
+create table if not exists MovieRating
+(
+movie_id int,
+user_id int,
+rating int,
+created_at date,
+primary key(movie_id , user_id) 
+);   
+    
+insert into Movies values (1, 'Avengers'),
+(2, 'Frozen 2'),
+(3,'Joker');    
+    
+    insert into MovieRating values(1, 1, 3, '2020-01-12'),
+(1, 2, 4 ,'2020-02-11'),
+(1, 3, 2 ,'2020-02-12'),
+(1, 4, 1 ,'2020-01-01'),
+(2, 1, 5 ,'2020-02-17'),
+(2,2, 2 ,'2020-02-01'),
+(2, 3, 2 ,'2020-03-01'),
+(3, 1, 3 ,'2020-02-22'),
+(3, 2, 4 ,'2020-02-25');
+    
+  insert into users2 values   (1, 'Daniel'),
+(2 ,'Monica'),
+(3 ,'Maria'),
+(4 ,'James');
+    
+select user_name as results from 
+(
+select a.name as user_name,count(*) as counts from MovieRating as b
+		join users2 as a 
+        on a.user_id = b.user_id
+        Group BY b.user_id
+        order by counts desc, user_name asc limit 1
+        )first_query
+Union
+select movie_name as results from 
+(
+select c.title as movie_name, avg(d.rating) as rate from MovieRating as d
+			join Movies as c
+            on c.movie_id = d.movie_id
+            where substr(d.created_at, 1, 7) = '2020-02'
+            group by d.movie_id
+            order by rate desc, movie_name asc limit 1
+            )second_query;
+    
+   #QUES36 -------------REPEATED------------------------------- 
+   #QUES37 -------------------REPEATED----------------------------- 
+    
+    
+    
+   #QUE38 
+    
+create table if not exists Departments
+(
+    id int,
+	name varchar(50),
+    Primary key(id)
+);
+    
+ create table if not exists students
+ (
+ id int,
+name varchar(50),
+department_id int,
+Primary key(id)
+);
+    
+    
+insert into Departments values (1, 'Electrical Engineering'),
+(7, 'Computer Engineering'),
+(13, 'Business Administration');
+    
+ insert into students values(   23, 'Alice',1 ),
+(1 ,'Bob' ,7),
+(5 ,'Jennifer', 13),
+(2 ,'John' ,14),
+(4 ,'Jasmine', 77),
+(3 ,'Steve' ,74),
+(6 ,'Luis' ,1),
+(8 ,'Jonathan', 7),
+(7 ,'Daiana' ,33),
+(11 ,'Madelynn', 1);
+    
+    
+select s.id, s.name,ifnull(d.name,'not Enrolled' ) as Dept_name
+from students s
+left join
+Departments d 
+on s.department_id = d.id
+where d.id is null ;   
+    
+#QUE39
+    
+ create table if not exists Calls
+ (
+from_id int,
+to_id int,
+duration int
+);
+    
+insert into Calls values(1, 2, 59),
+(2 ,1, 11),
+(1, 3, 20),
+(3, 4, 100),
+(3, 4, 200),
+(3, 4, 200),
+(4, 3, 499);    
+    
+select least(from_id ,to_id) AS person1, greatest(from_id, to_id) AS person2,
+COUNT(*) AS call_count,
+sum(duration) AS total_duration
+From Calls
+group by person1,person2;
+    
+    
+    
+#QUE40 (Repeated QUES23)
+    
+ #Solution is : 
+ 
+ #select p.product_id, round(sum(p.price * u.units) / sum(u.units), 2) as average_selling_price
+ #from price p 
+ #inner join
+ #UnitsSold u 
+#on p.product_id = u.product_id and (u.purchase_date between p.start_date and p.end_date)
+ #group by p.product_id;
+    
+ 
+ #QUE41
+ create table if not exists Warehouse
+(
+name varchar(50),
+product_id int,
+units int,
+primary key(name, product_id)
+);    
+    
+    
+ create table if not exists products2
+ (
+ 
+product_id int,
+product_name varchar(50),
+Width int,
+Length int,
+Height int,
+primary key(product_id)
+);
+    
+    
+insert into Warehouse values ('LCHouse1', 1, 1),
+('LCHouse1', 2, 10),
+('LCHouse1', 3, 5),
+('LCHouse2', 1, 2),
+('LCHouse2', 2, 2),
+('LCHouse3', 4, 1);    
+    
+ insert into products2 values (1, 'LC-TV', 5, 50, 40),
+(2 ,'LC-KeyChain', 5, 5, 5),
+(3 ,'LC-Phone', 2, 10 ,10),
+(4 ,'LC-T-Shirt', 4, 10, 20);   
+    
+# Write an SQL query to report the number of cubic feet of volume the inventory occupies in each warehouse. Return the result table in any order   
+    
+    
+  select warehouse_name, sum(volume) as volume from (
+													select w.name as warehouse_name , w.units * width *length * Height as volume
+                                                    from  Warehouse w left join products2 p 
+                                                    on w.product_id = p.product_id
+                                                   ) t
+group by warehouse_name;                                                   
+    
+    
+create table if not exists  Sales1
+(
+sale_date date,
+fruit enum('apples','oranges'),
+sold_num int,
+primary key(sale_date,fruit)
+);
+    
+drop table Sales1;    
+    
+insert into Sales1 values ('2020-05-01', 'apples', 10),
+('2020-05-01', 'oranges', 8),
+('2020-05-02', 'apples', 15),
+('2020-05-02', 'oranges', 15),
+('2020-05-03', 'apples', 20),
+('2020-05-03', 'oranges', 0),
+('2020-05-04', 'apples', 15),
+('2020-05-04', 'oranges', 16);
+
+#QUE42 Write an SQL query to report the difference between the number of apples and oranges sold each day. Return the result table ordered by sale_date.
+
+    
+    
+    
+ select a.sale_date, a.sold_num - b.sold_num
+ from Sales1 a left join Sales b
+ on a.sale_date = b.sale_date
+ where a.fruit = 'apples' and b.fruit = 'oranges'
+    
+    
+    
+        
